@@ -22,6 +22,7 @@ static int listenfd;
 int *clients;
 static void start_server(const char *);
 static void respond(int);
+static header_t reqhdr[17] = {{"\0", "\0"}};
 
 static char *buf;
 
