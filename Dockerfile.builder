@@ -11,5 +11,6 @@ RUN CC="gcc -static" ./configure --prefix=/usr/local/musl --exec-prefix=/usr/loc
 RUN make install
 
 WORKDIR /workspace
+RUN git config --global --add safe.directory /workspace
 
 CMD ["sh"]

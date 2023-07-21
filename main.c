@@ -6,8 +6,8 @@
 
 
 
-int main(int c, char **v) {
-  char *port = c == 1 ? "8000" : v[1];
+int main(int argc, char **argv) {
+  char *port = argc == 1 ? "8000" : argv[1];
   serve_forever(port);
   return 0;
 }
