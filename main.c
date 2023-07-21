@@ -4,65 +4,48 @@
 
 #define CHUNK_SIZE 1024 // read 1024 bytes at a time
 
-
-
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   char *port = argc == 1 ? "8000" : argv[1];
   serve_forever(port);
   return 0;
 }
 
-int file_exists(const char *file_name) {
-  struct stat buffer;
-  int exists;
-
-  exists = (stat(file_name, &buffer) == 0);
-
-  return exists;
-}
-
-int read_file(const char *file_name) {
-  char buf[CHUNK_SIZE];
-  FILE *file;
-  size_t nread;
-  int err = 1;
-
-  file = fopen(file_name, "r");
-
-  if (file) {
-    while ((nread = fread(buf, 1, sizeof buf, file)) > 0)
-      fwrite(buf, 1, nread, stdout);
-
-    err = ferror(file);
-    fclose(file);
-  }
-  return err;
-}
-
-void route() {
+void route()
+{
   ROUTE_START()
 
-  GET("/") {
+  GET("/")
+  {
     HTTP_200;
     printf("Hello! You are using %s.\n", request_header("User-Agent"));
   }
 
-  GET("/health/liveness") {
+  GET("/health/liveness")
+  {
     HTTP_200;
     printf("{\"ok\":true}\n");
   }
 
-  GET("/health/readiness") {
+  GET("/health/readiness")
+  {
     HTTP_200;
     printf("{\"ok\":true}\n");
   }
 
-  POST("/") {
+  POST("/")
+  {
     HTTP_201;
     char *inputString = payload;
-    char* encoded_string = base64_encode(inputString);
+    char *encoded_string = base64_encode(inputString);
     printf("%s", encoded_string);
     free(encoded_string); // Remember to free the allocated memory after use
+  }
+
+  GET(uri)
+  {
+    HTTP_200;
+    printf("%s", uri);
   }
 
   ROUTE_END()
