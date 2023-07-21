@@ -49,12 +49,12 @@ void route() {
 
   GET("/health/liveness") {
     HTTP_200;
-    printf("OK");
+    printf("{\"ok\":true}\n");
   }
 
   GET("/health/readiness") {
     HTTP_200;
-    printf("OK");
+    printf("{\"ok\":true}\n");
   }
 
   POST("/") {
